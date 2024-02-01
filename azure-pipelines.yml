@@ -31,7 +31,12 @@ steps:
     testResultsFiles: "**/TEST-*.xml"
     goals: "package"
     
-
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    publishLocation: 'pipeline'
+    artifact: 'drop'
+    
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: "JaCoCo"
