@@ -8,12 +8,12 @@ trigger:
 
 strategy:
   matrix:
-    jdk10_linux:
+    jdk11_linux:
       imageName: "ubuntu-latest"
-      jdkVersion: "1.10"
-    jdk11_windows:
-      imageName: "windows-latest"
       jdkVersion: "1.11"
+    jdk12_windows:
+      imageName: "windows-latest"
+      jdkVersion: "1.12"
   maxParallel: 2
 
 pool:
@@ -31,12 +31,7 @@ steps:
     testResultsFiles: "**/TEST-*.xml"
     goals: "package"
     
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Pipeline.Workspace)'
-    publishLocation: 'pipeline'
-    artifact: 'drop'
-    
+
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: "JaCoCo"
@@ -44,4 +39,9 @@ steps:
     reportDirectory: "$(System.DefaultWorkingDirectory)/**/site/jacoco"
     failIfCoverageEmpty: true
     
-  
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    publishLocation: 'pipeline'
+    artifact: 'drop'
+      
