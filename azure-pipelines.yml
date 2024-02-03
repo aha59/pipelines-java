@@ -38,10 +38,13 @@ steps:
     summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml"
     reportDirectory: "$(System.DefaultWorkingDirectory)/**/site/jacoco"
     failIfCoverageEmpty: true
-    
+      
 - task: PublishPipelineArtifact@1
+  displayName: 'Publish pipeline artifact'
   inputs:
     targetPath: '$(Pipeline.Workspace)'
+    ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+        artifact: 'prod'
+    ${{ else }}:
+        artifact: 'dev'
     publishLocation: 'pipeline'
-    artifact: 'drop'
-      
