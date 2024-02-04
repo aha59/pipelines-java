@@ -44,7 +44,7 @@ steps:
   inputs:
     targetPath: '$(Pipeline.Workspace)'
     ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-        artifact: 'prod'
+        artifact: '$(system.JobId)'
     ${{ else }}:
         artifact: 'dev'
     publishLocation: 'pipeline'
